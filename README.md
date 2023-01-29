@@ -8,8 +8,9 @@ There are 2 types of bots, UserBots and Bots
 UserBots will require your Username and Password to be passed in as well as the bots name and surname you would like to controll
 Bots only require the bots Token
 
-### A Bot that will reply to any message (say, pose, message... e.t.c.) that is "ping":
+### QuickStart:
 ```python3
+### this is a Bot that will reply to any message (say, pose, message... e.t.c.) that is "ping" ###
 import MuckletBot
 
 # This is the function that will be called when a message is received.
@@ -41,3 +42,15 @@ if __name__ == "__main__":
     # start the bot.
     bot.start()
 ```
+## Docs:
+First and foremost I would recomend checking out the [original bot](https://github.com/ScientiFox/mucklet-bot-python) as most of the used code has come from there.
+
+
+
+
+
+
+
+
+
+
