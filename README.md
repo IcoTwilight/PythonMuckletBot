@@ -10,23 +10,25 @@ Bots only require the bots Token
 
 ### QuickStart:
 ```python3
-### this is a Bot that will reply to any message (say, pose, message... e.t.c.) that is "ping" ###
 import MuckletBot
+import json
+
 
 # This is the function that will be called when a message is received.
 def OnMessage(bot, message):
-    # print the message(dict) to the console for debugging purposes.
-    print(message)
-    # get the data from the message.
-    data = message.get("data")
-    # check if the data is not empty.
-    if data:
-        # check if the message is not from the bot itself.
-        if data.get("char").get("id") != bot.CID:
-            # check if the message is ping.
-            if data.get("msg") == "ping":
-                # say pong.
-                bot.say("pong")
+    print("Recieved")
+    if message.loggedMessage:
+        print("Logged message: "+message.text)
+        if not message.isme:
+            try:
+                bot.say(f"Hi, {' '.join(message.sender.name)}. You said: {message.text} ({message.type})")
+            except Exception as e:
+                print(e)
+                bot.say("Error: "+str(e))
+    # with json pretty print the data:
+    print(json.dumps(message.message, indent=4, sort_keys=True))
+    print("------------")
+
 
 # This is the function that will be called when the bot starts.
 def OnStart(bot):
@@ -35,7 +37,7 @@ def OnStart(bot):
 
 if __name__ == "__main__":
     # create a new bot instance with your Token
-    bot = MuckletBot.Bot(TOKEN="YOUR TOKEN HERE")
+    bot = MuckletBot.Bot(TOKEN = "Your Token Here", VERBOSE = True)
     # set the functions to be called when a message is received and when the bot starts.
     bot.OnMessage = OnMessage
     bot.OnStart = OnStart
