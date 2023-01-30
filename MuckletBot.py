@@ -46,7 +46,7 @@ class Message:
             self.loggedMessage = False
             return
         event = self.event.split(".")
-        event = self.event[-2:-1]
+        event = event[-2:]
         if event == ["ctrl", "out"]:
             self.loggedMessage = True
         else:
@@ -63,11 +63,11 @@ class Message:
             self.sig  = self.data.get("sig")
             self.sender = self.data.get("char")
             if self.sender:
-                self.sender = Player(self.bot, self.chardata.get("name"), self.chardata.get("surname"), self.chardata.get("id"))
+                self.sender = Player(self.bot, self.sender.get("name"), self.sender.get("surname"), self.sender.get("id"))
+                self.isme = self.sender.id == self.bot.CID
             self.target = self.data.get("target")
             if self.target:
-                self.target = Player(self.bot, self.targetdata.get("name"), self.targetdata.get("surname"), self.targetdata.get("id"))
-            self.isme = True if self.sender.id == self.bot.CID else False
+                self.target = Player(self.bot, self.target.get("name"), self.target.get("surname"), self.target.get("id"))
         except:
             return
 class Bot:
