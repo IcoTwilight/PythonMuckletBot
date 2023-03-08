@@ -63,3 +63,48 @@ if __name__ == "__main__":
 ```
 ## Docs:
 First and foremost I would recomend checking out the [original bot](https://github.com/ScientiFox/mucklet-bot-python) as most of the used code has come from there.
+
+`MuckletBot.bot(TOKEN = None, USERNAME = None, PASSWORD = None, BOTFIRSTNAME = None, BOTSURNAME = None, HOST = 'wss://api.test.mucklet.com', ORIGIN = 'https://test.mucklet.com', VERBOSE = False), -> Bot`
+Creates a bot object.
+
+`bot.OnMessage`
+Overide this function to have any messages be sent to the function specified.
+
+`bot.OnStart`
+Overide this function to have the bot run the function specified in a seperate thread when the bot has fully booted.
+
+`bot.start()`
+Start and boot the bot.
+
+`bot.sleep()`
+Sleep the bot.
+
+`bot.say(message)`
+Say a message.
+
+`bot.go(exit)`
+go through an exit.
+
+`bot.pose(message)`
+Pose a message.
+
+`bot.teleport(node)`
+teleport the bot.
+
+`bot.whisper(targetID, message, pose)`
+whisper a message to a character.
+
+`bot.address(targetID, message)`
+address a message to a character.
+
+`bot.message(targetID, message)`
+send a message to a character.
+
+`bot.ping()`
+keep the bot awake.
+
+`getID(name)`
+This will get the ID from a characters full name. the result will go through the OnMessage function.
+
+`bot.quit()`
+sleep the bot and close the connection.
