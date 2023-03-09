@@ -218,7 +218,8 @@ class Bot:
             if self.onMessage is not None:
                 if raw.get("event"):
                     if raw.get("event").split(".")[2] == self.CID:
-                        self.onMessage(self, message)
+                        thread = threading.Thread(target=self.onMessage, args=(self, message))
+                        thread.start()
             else:
                 if not self.VERBOSE:
                     self.Logger.log(message, title = "Message Recieved")
