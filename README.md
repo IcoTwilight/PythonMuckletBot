@@ -11,55 +11,66 @@ Bots only require the bots Token
 ### QuickStart:
 ```python3
 import MuckletBot
-import random, time
+import time
+import random
 
-ACTIONS = [
-    "Plays with a ball of yarn.",
-    "Wipes her nose.",
+FILLER = [
     "Scratches her ear.",
-    "Stretches, letting out a big yawn.",
-    "Begins to fall asleep."
-    ]
+    "Yawns.",
+    "Stretches her arms up in the air - It's been a busy day.",
+    "Looks around.",
+    "Twitches her ear.",
+    "Scrolls through her phone.",
+    "Thinks to herself, *what should I do?*",
+]
 
-# this function is called when the bot receives a message that isn't part of the boot sequence
+# the function that gets called when a message is recieved
 def OnMessage(bot, message):
-    # if the message is for the bot (not any of your other awake characters) and not from the bot (to prevent infinite loops)
-    if message.toSelf() and not message.fromSelf():
-        # if the message is a message, address, or whisper
-        if message.type() in ["address", "message", "whisper"]:
-            # if the message is not empty
-            if (text := message.message()) is not None:
-                # if the message starts with "ping"
-                if text.lower().startswith("ping"):
-                    # send a message to the sender of the message (we know there is a sender because the type is either a address, message, or whisper)
-                    bot.message(message.sender().id, "pong ^w^")
-                # if the message starts with "inspect"
-                elif text.lower().startswith("inspect"):
-                    # send info about the message to the sender of the message
-                    sendMessage = str(message)
-                    bot.message(message.sender().id, sendMessage)
-                else:
-                    # otherwise, send the message back to the sender of the message
-                    bot.message(message.sender().id, text)
+    # if the message type is either a say, pose, whisper, address or a message
+    if message.get("type") in ["say", "pose", "whisper", "address", "message"]:
+        # if the recieved message is not from ourself
+        if message.get("sender").id != bot.CID:
+            # if the message is ping
+            if message.get("message").lower().strip() == "ping":
+                # send a message pong back to the sender
+                message.get("sender").message("pong")
+            else:
+                # otherwise send the message back to the sender
+                bot.message(message.get("sender"), f"You said {message.get('message')}")
 
-# this function is called in a seperate thread when the bot is fully booted
-def OnStart(bot):
-    while(True):
-        # pick a random action from the list of actions
-        action = random.choice(ACTIONS)
-        # pose the action
-        bot.pose(action)
-        # wait a random amount of time between 2 and 3 minutes
-        time.sleep(random.randint(120, 180))
+# the function that gets called in a seperate thread when the bot is fully booted
+def OnOpen(bot):
+    # get the CharacterID of Ico Twilight (the code's owner - a.k.a. me)
+    id = bot.getCharID("Ico Twilight")
+    if id == None:
+        # if the character doesn't exist, exit
+        bot.Logger("Character not found", title = "RECIEVED ERROR")
+    else:
+        # send Ico Twilight a message
+        bot.message(id, "hiya, I am a bot!")
+    while(1):
+        # sleep for a random amount of time between 2 minutes and 5 minutes
+        time.sleep(random.randint(120, 300))
+        # pose a random action from the FILLER
+        bot.pose(random.choice(FILLER))
+
+def OnError(bot, error):
+    # any errors that occur without an atached promise will be sent here
+    bot.Logger(str(error), title = "RECIEVED ERROR WITHOUT PROMISE")
 
 if __name__ == "__main__":
-    # note that you can either use just the bot token or the player name, lastname , username and password
-    bot = MuckletBot.Bot(TOKEN = "<Your Token Here>")
-    
-    bot.OnMessage = OnMessage
-    bot.OnStart = OnStart
-
-    bot.start()
+    # create a new bot
+    bot = MuckletBot2.Bot(TOKEN = "<YOUR TOKEN HERE>", VERBOSE=False)
+    # set the onMessage event handler
+    bot.onMessage = OnMessage
+    # set the onStart event handler
+    bot.onOpen = OnOpen
+    # set the onError event handler
+    bot.onError = OnError
+    # start the bot
+    bot.run_forever()
+    # note if you want to run 1 < bots in the same script, you need to use run() instead of run_forever()
+    # then run run_forever() on each bot in a separate thread (see the threading module)
 ```
 ## Docs:
 First and foremost I would recomend checking out the [original bot](https://github.com/ScientiFox/mucklet-bot-python) as most of the used code has come from there.
