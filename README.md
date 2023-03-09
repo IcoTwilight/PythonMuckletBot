@@ -60,7 +60,7 @@ def OnError(bot, error):
 
 if __name__ == "__main__":
     # create a new bot
-    bot = MuckletBot2.Bot(TOKEN = "<YOUR TOKEN HERE>", VERBOSE=False)
+    bot = MuckletBot.Bot(TOKEN = "<YOUR TOKEN HERE>", VERBOSE=False)
     # set the onMessage event handler
     bot.onMessage = OnMessage
     # set the onStart event handler
