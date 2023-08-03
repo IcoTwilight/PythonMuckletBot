@@ -3,7 +3,15 @@ This documentation provides a brief overview of the Mucklet Bot library and demo
 and manage a bot for Mucklet's text-based virtual world.
 
 ## Instalation
-> simply download the repository as a zip file then extract it. (pip install will be availble in a future release)
+simply download the repository as a zip file then extract it. (pip install will be availble in a future release)
+
+Then run the following
+```shell
+pip install json
+pip install websocket-client
+```
+
+you may need to uninsatll any other websocket library if any errors occur
 
 ## Getting Started
 To create a bot follow these steps to get set up
