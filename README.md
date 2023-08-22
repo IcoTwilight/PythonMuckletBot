@@ -3,15 +3,17 @@ This documentation provides a brief overview of the Mucklet Bot library and demo
 and manage a bot for Mucklet's text-based virtual world.
 
 ## Instalation
-simply download the repository as a zip file then extract it. (pip install will be availble in a future release)
 
-Then run the following
+Simply run the following command in your terminal
 ```shell
-pip install json
-pip install websocket-client
+pip install mucklet
 ```
 
-you may need to uninsatll any other websocket library if any errors occur
+if you get any errors when importing the library, try uninstalling any other websocket libraries you have installed
+```shell
+pip uninstall websockets
+pip uninstall websocket
+```
 
 ## Getting Started
 To create a bot follow these steps to get set up
@@ -89,6 +91,7 @@ You can attach event handlers to these events using the on method of the Bot cla
 def on_say(message):
     # Handle the "say" event
     # ...
+    pass
 ```
 
 ---
