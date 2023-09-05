@@ -5,7 +5,7 @@ with open("README.md", "r", encoding = "utf-8") as fh:
 
 setuptools.setup(
     name = "Mucklet",
-    version = "1.0.6",
+    version = "1.0.7",
     author = "Ico Twilight",
     author_email = "Ico@duck.com",
     description = "A package for creating and using bots for the Mucklet role-playing service.",
