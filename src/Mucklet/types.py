@@ -1,7 +1,7 @@
-from Mucklet.ResClient import Request
+from .ResClient import Request
 
 try:
-	from Mucklet.bot import Bot
+	from .bot import Bot
 except ImportError:
 	pass
 

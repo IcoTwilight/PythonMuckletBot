@@ -2,7 +2,7 @@ import websocket
 import json
 import time
 import threading
-from Mucklet.log import Logger
+from .log import Logger
 
 
 class Request:
@@ -15,10 +15,9 @@ class Request:
 		self.id = Request.iteration
 		
 		self.params = params or {}
-		if not method:
-			self.method = ""
-		else:
-			self.method = ".".join(method)
+		if method is None:
+			method = ()
+		self.method = ".".join([str(m) for m in method])
 		self.pending_data = {"jsonrpc": "2.0",
 		                     "method" : self.method,
 		                     "params" : self.params, }

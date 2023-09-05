@@ -1,15 +1,15 @@
-from Mucklet.ResClient import ResClient
-from Mucklet.ResClient import Request
-from Mucklet.log import Logger
-from Mucklet.types import Character
-from Mucklet.types import Room
-from Mucklet.types import Exit
-from Mucklet.types import EventBase
-from Mucklet.types import CharacterMessageEvent
-from Mucklet.types import CharacterPoseableMessageEvent
-from Mucklet.types import TargetedCharacterMessageEvent
-from Mucklet.types import TargetRoomMessageEvent
-from Mucklet.types import TargetedCharacterEvents
+from .ResClient import ResClient
+from .ResClient import Request
+from .log import Logger
+from .types import Character
+from .types import Room
+from .types import Exit
+from .types import EventBase
+from .types import CharacterMessageEvent
+from .types import CharacterPoseableMessageEvent
+from .types import TargetedCharacterMessageEvent
+from .types import TargetRoomMessageEvent
+from .types import TargetedCharacterEvents
 import time
 import sys
 
@@ -125,7 +125,7 @@ class Bot:
 		self.log_info(f"Authenticating bot - {self.token:.5}...")
 		auth = self.client.auth("auth", "authenticateBot",
 		                        token = self.token).wait()
-		self.get_error(auth)
+		self.get_error(auth, True)
 		self.log_success("Successfully authenticated bot")
 	
 	def get_bot(self) -> None:
@@ -508,3 +508,4 @@ class Bot:
 		self.client.close()
 		self.log_success("Successfully killed bot")
 		sys.exit()
+		
