@@ -1,15 +1,15 @@
-from src.Mucklet.ResClient import ResClient
-from src.Mucklet.ResClient import Request
-from src.Mucklet.log import Logger
-from src.Mucklet.types import Character
-from src.Mucklet.types import Room
-from src.Mucklet.types import Exit
-from src.Mucklet.types import EventBase
-from src.Mucklet.types import CharacterMessageEvent
-from src.Mucklet.types import CharacterPoseableMessageEvent
-from src.Mucklet.types import TargetedCharacterMessageEvent
-from src.Mucklet.types import TargetRoomMessageEvent
-from src.Mucklet.types import TargetedCharacterEvents
+from Mucklet.ResClient import ResClient
+from Mucklet.ResClient import Request
+from Mucklet.log import Logger
+from Mucklet.types import Character
+from Mucklet.types import Room
+from Mucklet.types import Exit
+from Mucklet.types import EventBase
+from Mucklet.types import CharacterMessageEvent
+from Mucklet.types import CharacterPoseableMessageEvent
+from Mucklet.types import TargetedCharacterMessageEvent
+from Mucklet.types import TargetRoomMessageEvent
+from Mucklet.types import TargetedCharacterEvents
 import time
 import sys
 

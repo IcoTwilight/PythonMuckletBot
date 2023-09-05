@@ -1,4 +1,4 @@
-from src.Mucklet.ResClient import Request
+from Mucklet.ResClient import Request
 
 try:
 	from src.Mucklet.bot import Bot
