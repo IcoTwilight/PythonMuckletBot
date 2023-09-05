@@ -13,8 +13,12 @@ class Request:
 		self.connection = _connection
 		Request.iteration += 1
 		self.id = Request.iteration
-		self.method = ".".join(method)
+		
 		self.params = params or {}
+		if not method:
+			self.method = ""
+		else:
+			self.method = ".".join(method)
 		self.pending_data = {"jsonrpc": "2.0",
 		                     "method" : self.method,
 		                     "params" : self.params, }
