@@ -2,7 +2,7 @@ import websocket
 import json
 import time
 import threading
-from src.Mucklet.log import Logger
+from Mucklet.log import Logger
 
 
 class Request:
