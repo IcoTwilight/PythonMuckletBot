@@ -231,6 +231,7 @@ def on_target(message):
 - ```Character.get_tags(self):``` (accessed by property)
 - ```Character.get_type(self):``` (accessed by property)
 - ```Character.get_full_name(self):``` (accessed by property)
+- ```Character.get_local_storage(self)```
 
 - ```name = property(get_name)``` (property)
 - ```surname = property(get_surname)``` (property)
@@ -244,6 +245,7 @@ def on_target(message):
 - ```status = property(get_status)``` (property)
 - ```tags = property(get_tags)``` (property)
 - ```type = property(get_type)``` (property)
+- ```local_storage = property(get_local_storage)``` (property)
 	
 - ```full_name = property(get_full_name)``` (property)
 

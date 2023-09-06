@@ -1,4 +1,5 @@
 from .ResClient import Request
+from .CachedDictionary import CachedDictionary
 
 try:
 	from .bot import Bot
@@ -72,6 +73,15 @@ class Character:
 	def get_full_name(self):
 		return str(self.name + " " + self.surname)
 	
+	def get_local_storage(self):
+		# check if the character is in the local storage
+		if self.id not in Character.LocalCharacterStorage.keys_cache:
+			# add the character to the local storage
+			Character.LocalCharacterStorage[self.id] = {}
+		return Character.LocalCharacterStorage[self.id]
+	
+	LocalCharacterStorage = CachedDictionary("Local Character Storage")
+	
 	name = property(get_name)
 	surname = property(get_surname)
 	avatar = property(get_avatar)
@@ -84,6 +94,7 @@ class Character:
 	status = property(get_status)
 	tags = property(get_tags)
 	type = property(get_type)
+	local_storage = property(get_local_storage)
 	
 	full_name = property(get_full_name)
 
@@ -357,7 +368,7 @@ class TargetRoomMessageEvent:
 
 
 # summon, join, leadRequest, followRequest, follow, stopFollow, stopLead
-class TargetedCharacterEvents:
+class TargetedCharacterEvent:
 	def __init__(self, character: Character, target: Character, puppeteer: Character | None = None):
 		self.character = character
 		self.target = target

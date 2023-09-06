@@ -9,7 +9,7 @@ from .types import CharacterMessageEvent
 from .types import CharacterPoseableMessageEvent
 from .types import TargetedCharacterMessageEvent
 from .types import TargetRoomMessageEvent
-from .types import TargetedCharacterEvents
+from .types import TargetedCharacterEvent
 import time
 import sys
 
@@ -76,13 +76,13 @@ class Bot:
 		                    
 		                    "travel"        : TargetRoomMessageEvent,
 		                    
-		                    "summon"        : TargetedCharacterEvents,
-		                    "join"          : TargetedCharacterEvents,
-		                    "leadRequest"   : TargetedCharacterEvents,
-		                    "followRequest" : TargetedCharacterEvents,
-		                    "follow"        : TargetedCharacterEvents,
-		                    "stopFollow"    : TargetedCharacterEvents,
-		                    "stopLead"      : TargetedCharacterEvents, }
+		                    "summon"        : TargetedCharacterEvent,
+		                    "join"          : TargetedCharacterEvent,
+		                    "leadRequest"   : TargetedCharacterEvent,
+		                    "followRequest" : TargetedCharacterEvent,
+		                    "follow"        : TargetedCharacterEvent,
+		                    "stopFollow"    : TargetedCharacterEvent,
+		                    "stopLead"      : TargetedCharacterEvent, }
 		
 		self.waiting_for_response_from = {}  # dict[character: time_sent]
 	
@@ -257,8 +257,8 @@ class Bot:
 						puppeteer = Character(id = data.get("puppeteer", {}).get("id"),
 						                      bot = self))
 			
-			elif event_class == TargetedCharacterEvents:
-				event.event = TargetedCharacterEvents(
+			elif event_class == TargetedCharacterEvent:
+				event.event = TargetedCharacterEvent(
 						character = Character(id = data.get("char", {}).get("id"),
 						                      bot = self),
 						target = Character(id = data.get("target", {}).get("id"),
@@ -277,10 +277,14 @@ class Bot:
 			# check if the character.id is in the self.waiting_for_response_from dictionary
 			if event.event.character.id in self.waiting_for_response_from:
 				# check the type is not a TargetedCharacterEvents
-				if event_class != TargetedCharacterEvents:
+				if event_class != TargetedCharacterEvent:
 					self.waiting_for_response_from[event.event.character.id] = event.event.message
 					# we want to return here as we don't want to call the on_calls
 					return
+			
+			# checks for character privacy commands (e.g. !get local cache)
+			if self.built_in_methods(event):
+				return
 			
 			for func in self.on_calls[event.type]:
 				func(event)
@@ -315,6 +319,31 @@ class Bot:
 		
 		while not self.booted:
 			time.sleep(0.1)
+	
+	def built_in_methods(self, event: EventBase) -> bool:
+		# check to make sure the event has a message
+		if type(event.event) == TargetedCharacterEvent:
+			return False
+		# get the message
+		message = event.event.message
+		if message[0] != "!":
+			return False
+		# split the message into its context
+		method = message.lower().strip()
+		if method == "!get local cache":
+			event.event.character.message(f"{event.event.character.local_storage}")
+			return True
+		elif method == "!revoke local cache":
+			event.event.character.local_storage.clear()
+			if event.event.character.local_storage.data == {}:
+				event.event.character.message("Successfully revoked local cache")
+			else:
+				event.event.character.message("Failed to revoke local cache")
+			return True
+		else:
+			return False
+		
+		
 	
 	def wake_up(self) -> None:
 		self.log_info("Waking up bot")
