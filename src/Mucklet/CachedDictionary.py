@@ -25,6 +25,9 @@ class CachedObject:
 	def __delitem__(self, key):
 		del self.data[key]
 		self.__update__()
+		
+	def __getitem__(self, key):
+		return self.data[key]
 	
 	def clear(self) -> None:
 		self.data.clear()
@@ -224,11 +227,10 @@ class CachedDictionary:
 		print("Cleared storage!")
 	
 	def get(self, key, default = None):
-		# check if the key is in the cache
-		if key in self.cache:
-			return self.cache[key]
-		# get the key from the storage
-		return self.__get_from_storage__(key, default = default, raise_error = False)
+		try:
+			return self[key]
+		except KeyNotFoundError:
+			return default
 	
 	def __test_get__(self, key, default = None):
 		# get the key from the storage
