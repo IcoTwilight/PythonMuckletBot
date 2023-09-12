@@ -13,10 +13,10 @@ class CachedObject:
 	def __init__(self, cached_dict: "CachedDictionary", key, data):
 		self.root = cached_dict
 		self.key = str(key)
-		self.data = data.copy()
+		self.data = data
 	
 	def __update__(self):
-		self.root[self.key] = self.data.copy()
+		self.root[self.key] = self.data
 	
 	def __setitem__(self, key, value):
 		self.data[key] = value
