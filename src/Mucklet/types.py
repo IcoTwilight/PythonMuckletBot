@@ -74,11 +74,12 @@ class Character:
 		return str(self.name + " " + self.surname)
 	
 	def get_local_storage(self):
-		# check if the character is in the local storage
-		if self.id not in Character.LocalCharacterStorage.keys_cache:
-			# add the character to the local storage
+		# check if the storage exists
+		if self.id not in Character.LocalCharacterStorage.keys():
+			# if not, create it
 			Character.LocalCharacterStorage[self.id] = {}
-		return Character.LocalCharacterStorage[self.id]
+		# return the storage
+		return Character.LocalCharacterStorage.get(self.id)
 	
 	LocalCharacterStorage = CachedDictionary("Local Character Storage")
 	
